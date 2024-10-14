@@ -8,18 +8,18 @@ services:
     ports:
       - "9000:9000"
     networks:
-      - net1
+      - cicd-network
   jenkins:
     container_name: nice_gates
     restart: always
     image: jenkins/jenkins
     ports:
       - "8080:8080"
-    depends_on:
-      - sonarqube
     networks:
-      - net1
+      - cicd-network
+    environment:
+      - JAVA_OPTS="-Dhudson.model.DownloadService.noSignatureCheck=true"
 
 networks:
-  net1:
+  cicd-network  :
     driver: bridge
